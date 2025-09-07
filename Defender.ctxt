@@ -1,0 +1,7 @@
+#BlueJ class context
+comment0.target=Defender
+comment1.params=health
+comment1.target=Defender(int)
+comment2.params=
+comment2.target=void\ onDefeated()
+numComments=3

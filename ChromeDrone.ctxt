@@ -1,0 +1,11 @@
+#BlueJ class context
+comment0.target=ChromeDrone
+comment1.params=isFirst
+comment1.target=ChromeDrone(boolean)
+comment2.params=
+comment2.target=void\ act()
+comment3.params=
+comment3.target=void\ handleAttackAnimation()
+comment4.params=
+comment4.target=void\ handleMovement()
+numComments=5

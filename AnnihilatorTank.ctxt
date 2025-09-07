@@ -1,0 +1,13 @@
+#BlueJ class context
+comment0.target=AnnihilatorTank
+comment1.params=
+comment1.target=AnnihilatorTank()
+comment2.params=world
+comment2.target=void\ addedToWorld(greenfoot.World)
+comment3.params=
+comment3.target=void\ act()
+comment4.params=
+comment4.target=boolean\ scanForTarget()
+comment5.params=
+comment5.target=void\ handleRamming()
+numComments=6

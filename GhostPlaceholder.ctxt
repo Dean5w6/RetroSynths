@@ -1,0 +1,6 @@
+#BlueJ class context
+comment0.target=GhostPlaceholder
+comment0.text=\r\n\ A\ visual\ placeholder\ that\ follows\ the\ mouse\ when\ a\ defender\ card\ is\ selected.\r\n\ It\ has\ no\ gameplay\ logic\ of\ its\ own;\ it\ is\ entirely\ controlled\ by\ the\ World.\r\n
+comment1.params=imageName
+comment1.target=GhostPlaceholder(java.lang.String)
+numComments=2
