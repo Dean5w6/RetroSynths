@@ -28,7 +28,6 @@ comment20.params=
 comment20.target=void\ updatePlutoniumDisplay()
 comment21.params=
 comment21.target=void\ prepare()
-comment21.text=\r\n\ Prepare\ the\ world\ for\ the\ start\ of\ the\ program.\r\n\ That\ is\:\ create\ the\ initial\ objects\ and\ add\ them\ to\ the\ world.\r\n
 comment3.params=
 comment3.target=void\ spawnTestBoss()
 comment4.params=

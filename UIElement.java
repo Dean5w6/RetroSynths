@@ -1,4 +1,3 @@
-// === UIElement (REVISED for Inheritance) ===
 import greenfoot.*;
 
 public abstract class UIElement extends Actor {
@@ -14,8 +13,7 @@ public abstract class UIElement extends Actor {
         hasBeenPlaced = true;
     }
     
-    public void act() {
-        // This logic will now be called by its children using super.act()
+    public void act() { 
         if (hasBeenPlaced && (getX() != fixedX || getY() != fixedY)) {
             setLocation(fixedX, fixedY);
         }

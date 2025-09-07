@@ -1,4 +1,3 @@
-// === PlasmaBall (COMPLETE REVISED CODE) ===
 import greenfoot.*;
 import java.util.List;
 import java.util.ArrayList;
@@ -8,8 +7,7 @@ public class PlasmaBall extends Actor {
     private GreenfootImage normalImg = new GreenfootImage("boss_plasma_normal.png");
     private GreenfootImage explode1Img = new GreenfootImage("boss_plasma_exploding1.png");
     private GreenfootImage explode2Img = new GreenfootImage("boss_plasma_exploding2.png");
-    
-    // --- REVISED: Projectile now moves left ---
+     
     private static final int MOVE_SPEED = -5; 
     private static final int DAMAGE = 500;
     
@@ -37,13 +35,11 @@ public class PlasmaBall extends Actor {
         
         setLocation(getX() + MOVE_SPEED, getY());
         
-        if (targets != null) {
-            // We have a target list, so we are penetrating
+        if (targets != null) { 
             penetrationDistance += Math.abs(MOVE_SPEED);
-            if (penetrationDistance >= 42) {
-                // --- REVISED: Damage all targets in the list ---
+            if (penetrationDistance >= 42) { 
                 for (Defender target : targets) {
-                    if (target.getWorld() != null) { // Make sure the target hasn't already been destroyed
+                    if (target.getWorld() != null) {  
                         target.takeDamage(DAMAGE);
                     }
                 }
@@ -53,20 +49,14 @@ public class PlasmaBall extends Actor {
             }
         } else {
             Defender primaryTarget = (Defender) getOneIntersectingObject(Defender.class);
-            if (primaryTarget != null) {
-                // --- THE FIX: Create our own modifiable list ---
-                // 1. Create a new, empty ArrayList that we can control.
+            if (primaryTarget != null) { 
                 targets = new ArrayList<Defender>();
-                
-                // 2. Add the defender we directly hit.
+                 
                 targets.add(primaryTarget);
-                
-                // 3. Find any defenders in the tile directly above.
+                 
                 List<Defender> defendersAbove = getWorld().getObjectsAt(primaryTarget.getX(), primaryTarget.getY() - Level1.TILE_HEIGHT, Defender.class);
-                
-                // 4. Add all of them to our list. This is safe even if the list is empty.
-                targets.addAll(defendersAbove);
-                // --- END OF FIX ---
+                 
+                targets.addAll(defendersAbove); 
                 
             } else if (isAtEdge()) {
                 getWorld().removeObject(this);
@@ -78,7 +68,7 @@ public class PlasmaBall extends Actor {
         explosionTimer--;
         if (explosionTimer == 0) {
             setImage(explode2Img);
-            explosionTimer = -EXPLOSION_FRAME_DURATION; // Use negative to mark frame 2
+            explosionTimer = -EXPLOSION_FRAME_DURATION; 
         } else if (explosionTimer < -EXPLOSION_FRAME_DURATION) {
             getWorld().removeObject(this);
         }

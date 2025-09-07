@@ -8,13 +8,11 @@ public class LaserDisc extends Actor {
     
     private static final int DAMAGE = 20;
     private static final int MOVE_SPEED = 8;
-
-    // State variables
+ 
     private boolean isExploding = false;
-    private LivingEntity targetEnemy = null; // Renamed for clarity
+    private LivingEntity targetEnemy = null; 
     private int penetrationDistance = 0;
-    
-    // --- NEW: Variable to hold the penetration limit for the current target ---
+     
     private int penetrationLimit;
     
     private int explosionTimer = 5;
@@ -36,28 +34,23 @@ public class LaserDisc extends Actor {
 
         setLocation(getX() + MOVE_SPEED, getY());
         
-        if (targetEnemy != null) {
-            // We have hit something and are now penetrating.
-            penetrationDistance += MOVE_SPEED;
-            // --- REVISED: Check against the dynamic penetration limit ---
+        if (targetEnemy != null) { 
+            penetrationDistance += MOVE_SPEED; 
             if (penetrationDistance >= penetrationLimit) {
                 isExploding = true;
                 setImage(explodingFrame);
             }
         } 
-        else {
-            // --- THE FIX: We now search for ANY Synthetic ---
+        else { 
             Synthetic enemy = (Synthetic) getOneIntersectingObject(Synthetic.class);
-            if (enemy != null) {
-                // First contact!
+            if (enemy != null) { 
                 enemy.takeDamage(DAMAGE);
-                targetEnemy = enemy; // Store the enemy we hit.
-                
-                // --- NEW: Set the penetration limit based on the enemy type ---
+                targetEnemy = enemy; 
+                 
                 if (enemy instanceof AnnihilatorTank) {
-                    penetrationLimit = 70; // Boss has low penetration
+                    penetrationLimit = 70; 
                 } else {
-                    penetrationLimit = 70; // Drones have high penetration
+                    penetrationLimit = 70;  
                 }
                 
             } else if (isAtEdge()) {

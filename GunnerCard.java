@@ -9,11 +9,11 @@ public class GunnerCard extends DefenderCard {
     int cost = 200;
 
     private int cooldownTimer = 0;
-    public static final int COOLDOWN_TIME = 300; // 5 seconds
+    public static final int COOLDOWN_TIME = 300;
 
     public GunnerCard() {
         idle.scale(100, 50);
-        selected.scale(100, 50); // Note: I see your Geiger card has a bigger selected image. You might want to make this one bigger too, e.g., selected.scale(110, 55);
+        selected.scale(100, 50);
         cooldownImage.scale(100, 50);
         setImage(idle);
     }
@@ -31,15 +31,13 @@ public class GunnerCard extends DefenderCard {
         if (!world.currentlySelectedCard.equals("gunner")) {
             setImage(idle);
         }
-        
-        // --- THE NEW DESELECTION LOGIC ---
-        if (Greenfoot.mouseClicked(this)) {
-            // If this card is ALREADY selected, deselect it.
+         
+        if (Greenfoot.mouseClicked(this)) { 
             if (world.currentlySelectedCard.equals("gunner")) {
                 world.currentlySelectedCard = "none";
                 setImage(idle);
             }
-            // Otherwise, if we can afford it, select it.
+
             else if (world.canAfford(cost)) {
                 world.currentlySelectedCard = "gunner";
                 setImage(selected);

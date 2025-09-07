@@ -2,8 +2,7 @@ import greenfoot.*;
 import java.util.List;
 
 public class Level1 extends World {
-
-    // Grid Calibration Controls
+ 
     public static final int TILE_WIDTH = 84;
     public static final int TILE_HEIGHT = 95;
     public static final int GRID_OFFSET_X = 284;
@@ -12,21 +11,17 @@ public class Level1 extends World {
     private static final int GRID_COLUMNS = 7;
     private static final int GRID_ROWS = 5;
 
-    // --- NEW: Wave 3 / Boss Wave state ---
     private int wave2Defeats = 0;
     private static final int ENEMIES_FOR_BOSS = 25;
     private boolean bossHasSpawned = false;
 
-    // --- NEW: Timer for fading text ---
     private int waveMessageTimer = 0;
 
-    // Game State
     private int plutonium = 200;
     public String currentlySelectedCard = "none";
 
     private GhostPlaceholder ghost;
 
-    // --- NEW: Wave System Variables ---
     private int enemiesDefeated = 0;
     private int currentWave = 1;
     private static final int ENEMIES_FOR_WAVE_2 = 5;
@@ -65,7 +60,7 @@ public class Level1 extends World {
 
     private void drawDebugGrid() {
         GreenfootImage grid = getBackground();
-        grid.setColor(Color.RED); // You can change this color if you want
+        grid.setColor(Color.RED);
         int rows = 5;
         int cols = 7; 
 
@@ -101,12 +96,11 @@ public class Level1 extends World {
     }
 
     public void playerHasWon() {
-        // Start the 3-second victory timer
-        victoryDelay = 180; // 3 seconds * 60 acts/sec
+        victoryDelay = 180; 
     }
 
     private void handleVictoryCondition() {
-        if (victoryDelay > 0) { // Is the timer active?
+        if (victoryDelay > 0) {
             victoryDelay--;
             if (victoryDelay == 0) {
                 Greenfoot.setWorld(new VictoryScreen());
@@ -139,17 +133,15 @@ public class Level1 extends World {
         }
     }
 
-    // --- NEW: Public method for entities to report their defeat ---
     public void enemyDefeated() {
         enemiesDefeated++;
 
         if (currentWave == 1 && enemiesDefeated >= ENEMIES_FOR_WAVE_2) {
             currentWave = 2;
             showText("Wave 2 has begun!", getWidth() / 2, 50);
-            waveMessageTimer = 300; // Start the 5-second fade timer
+            waveMessageTimer = 300; 
         }
 
-        // --- NEW: Check for boss spawn condition ---
         if (currentWave == 2 && !bossHasSpawned) {
             wave2Defeats++;
             if (wave2Defeats >= ENEMIES_FOR_BOSS) {
@@ -162,42 +154,34 @@ public class Level1 extends World {
         if (waveMessageTimer > 0) {
             waveMessageTimer--;
             if (waveMessageTimer == 0) {
-                // After the timer runs out, clear both potential message spots.
-                showText("", getWidth() / 2, 50); // Clears "Wave 2" message
-                showText("", getWidth() / 2, 50); // Clears "BOSS INCOMING!!" message
+
+                showText("", getWidth() / 2, 50); 
+                showText("", getWidth() / 2, 50);
             }
         }
     }
 
     private void spawnBoss() {
         bossHasSpawned = true;
-        showText("!! BOSS INCOMING!!", getWidth() / 2, 50);
-        // --- NEW: Reuse the wave message timer to make this text disappear ---
-        waveMessageTimer = 300; // 5 seconds
-
+        showText("BOSS INCOMING!!", getWidth() / 2, 50);
+        waveMessageTimer = 300; 
         int randomLane = Greenfoot.getRandomNumber(5);
         int spawnY = randomLane * TILE_HEIGHT + GRID_OFFSET_Y + TILE_HEIGHT / 2 - 32;
         addObject(new AnnihilatorTank(), getWidth() + 20, spawnY);
     }
 
-    // --- NEW METHOD: Handles the spawning of free resources ---
     private void handleResourceDrops() {
         resourceDropTimer--;
         if (resourceDropTimer <= 0) {
-            // Calculate a random X position within the playable grid area
-            int randomColumn = Greenfoot.getRandomNumber(7); // 7 columns, 0-6
+            int randomColumn = Greenfoot.getRandomNumber(7); 
             int spawnX = GRID_OFFSET_X + (randomColumn * TILE_WIDTH) + (TILE_WIDTH / 2);
 
-            // The starting Y position at the top of the grid
             int spawnY = GRID_OFFSET_Y;
 
-            // The Y position of the center of the bottom-most lane (lane 4)
             int stopY = GRID_OFFSET_Y + (4 * TILE_HEIGHT) + (TILE_HEIGHT / 2);
 
-            // Create the cell and tell it where to stop falling
             addObject(new PlutoniumCell(stopY), spawnX, spawnY);
 
-            // Reset the timer for the next drop (20 seconds)
             resourceDropTimer = 1200;
         }
     }
@@ -205,39 +189,33 @@ public class Level1 extends World {
     private void handleSpawning() {
         spawnTimer--;
         if (spawnTimer <= 0) {
-            // CASE 1: The very first enemy has NOT spawned yet.
             if (!firstEnemyHasSpawned) {
                 spawnFirstDrone();
                 firstEnemyHasSpawned = true;
-                // Set the special 40-second delay before Wave 1 truly begins.
-                spawnTimer = 2400; // 40 seconds * 60 acts/sec
+                spawnTimer = 2400;  
             } 
-            // CASE 2: The first enemy has spawned, now we do normal waves.
+          
             else {
                 spawnWaveDrone();
             }
         }
     }
 
-    // A new helper method to spawn the weak first drone
     private void spawnFirstDrone() {
         int randomLane = Greenfoot.getRandomNumber(5);
         int spawnY = randomLane * TILE_HEIGHT + GRID_OFFSET_Y + TILE_HEIGHT / 2 - 5;
-        // We pass 'true' to the constructor to make this a weak drone
+      
         addObject(new ChromeDrone(true), getWidth() - 50, spawnY);
     }
-
-    // A new helper method for all subsequent wave spawns
+ 
     private void spawnWaveDrone() {
         int randomLane = Greenfoot.getRandomNumber(5);
         int spawnY = randomLane * TILE_HEIGHT + GRID_OFFSET_Y + TILE_HEIGHT / 2 - 5;
         addObject(new ChromeDrone(false), getWidth() - 50, spawnY); // Pass 'false' for normal drone
 
-        if (currentWave == 1) {
-            // Wave 1: 10 to 15 seconds
+        if (currentWave == 1) { 
             spawnTimer = 600 + Greenfoot.getRandomNumber(300);
-        } else {
-            // Wave 2: 4 to 6 seconds with 50% bonus drone
+        } else { 
             if (Greenfoot.getRandomNumber(2) == 0) {
                 int secondLane = Greenfoot.getRandomNumber(5);
                 int secondSpawnY = secondLane * TILE_HEIGHT + GRID_OFFSET_Y + TILE_HEIGHT / 2 - 5;
@@ -249,8 +227,7 @@ public class Level1 extends World {
 
     private void handleGridClick() {
         if (Greenfoot.mouseClicked(null)) {
-            MouseInfo mouse = Greenfoot.getMouseInfo();
-            // Expanded this check for safety
+            MouseInfo mouse = Greenfoot.getMouseInfo(); 
             if (mouse == null || mouse.getActor() instanceof UIElement) {
                 return;
             }
@@ -262,8 +239,7 @@ public class Level1 extends World {
                 if (tileX >= 0 && tileX < GRID_COLUMNS && tileY >= 0 && tileY < GRID_ROWS) {
                     if (currentlySelectedCard.equals("wrench")) {
                         removeDefenderAt(tileX, tileY);
-                    } else {
-                        // This now calls the fixed method
+                    } else { 
                         placeDefenderAt(tileX, tileY);
                     }
                 } else {
@@ -278,13 +254,10 @@ public class Level1 extends World {
         int worldY = tileY * TILE_HEIGHT + GRID_OFFSET_Y + TILE_HEIGHT / 2;
 
         List<Defender> defendersOnTile = getObjectsAt(worldX, worldY, Defender.class);
-        if (!defendersOnTile.isEmpty()) {
-            // Found a defender, remove the first one in the list.
-            removeObject(defendersOnTile.get(0));
-            // Optional: You could add a refund here, e.g., addPlutonium(50);
+        if (!defendersOnTile.isEmpty()) { 
+            removeObject(defendersOnTile.get(0)); 
         }
-
-        // Always deselect the wrench after one use attempt (success or failure).
+ 
         currentlySelectedCard = "none";
     }
 
@@ -294,7 +267,7 @@ public class Level1 extends World {
 
         List<Defender> defendersOnTile = getObjectsAt(worldX, worldY, Defender.class);
         if (!defendersOnTile.isEmpty()) {
-            return; // Tile is occupied
+            return;  
         }
 
         if (currentlySelectedCard.equals("geiger")) {
@@ -326,10 +299,7 @@ public class Level1 extends World {
     public void updatePlutoniumDisplay() {
         showText("" + plutonium, 92, 40);
     }
-    /**
-     * Prepare the world for the start of the program.
-     * That is: create the initial objects and add them to the world.
-     */
+
     private void prepare()
     {
     }
