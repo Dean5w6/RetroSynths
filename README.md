@@ -1,7 +1,7 @@
 # RetroSynths
 
 <p align="center">
-  <img src="images/RetroSynths_cover.png" alt="RetroSynths Cover Art" width="700">
+  <img src="images/RetroSynths_cover.png" alt="RetroSynths Cover Art" width="400">
 </p>
 
 A synthwave-inspired tower defense game where retro-tech clashes with a rogue AI. Developed in Greenfoot (Java), this project serves as a practical application of object-oriented programming principles.
