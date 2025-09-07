@@ -50,11 +50,11 @@ This game was developed as a practical project for the **Computer Programming 4:
 
 ## Gameplay Screenshots
 
-![Normal Wave](images/normal_preview.png)
-*Defending against a standard wave of Chrome Drones.*
+![Normal Wave](images/normal_preview.gif)
+<br>*Defending against a standard wave of Chrome Drones.*
 
-![Boss Encounter](images/boss_preview.png)
-*The final confrontation with the Annihilator Tank boss.*
+![Boss Encounter](images/boss_preview.gif)
+<br>*The final confrontation with the Annihilator Tank boss.*
 
 ## Credits
 
